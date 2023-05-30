@@ -55,3 +55,4 @@ public class Main {
         System.out.println(Lesson / 60 + 9 + " " + Lesson % 60);
     }
 }
+//test
