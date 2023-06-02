@@ -4,7 +4,7 @@ import java.util.Scanner;
 
 public class Task1 {
     public static void main(String[] args) {
-        //1. реализуйте задачу, которая принимает строку с консоли и вычленяет все числа и находит их сумму.
+        //1. реализуйте задачу, которая принимает строку с консоли и вычленяет все числа и находит их сумму
 
         System.out.println("Завдання 1");
         Scanner scanner = new Scanner(System.in);
