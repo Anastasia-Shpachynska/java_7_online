@@ -5,9 +5,6 @@ import service.Dictionary;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
 
 public class DictionaryController<K, V> {
 
@@ -26,17 +23,17 @@ public class DictionaryController<K, V> {
 
     private void menu() {
         System.out.println();
-        System.out.println("Size - 1");
-        System.out.println("Is empty - 2");
-        System.out.println("Contains key - 3");
-        System.out.println("Contains value - 4");
-        System.out.println("Get key - 5");
-        System.out.println("Put - 6");
-        System.out.println("Remove - 7");
-        System.out.println("Put all - 8");
-        System.out.println("Clear - 9");
-        System.out.println("Key set - 10");
-        System.out.println("Values - 11");
+        System.out.println("Check size the dictionary - 1");
+        System.out.println("Dictionary is empty or not - 2");
+        System.out.println("Check if the key is in the dictionary - 3");
+        System.out.println("Check if the value is in the dictionary - 4");
+        System.out.println("Find value by key - 5");
+        System.out.println("Add element - 6");
+        System.out.println("Remove element - 7");
+        System.out.println("Put all elements - 8");
+        System.out.println("Clear all - 9");
+        System.out.println("View all unique keys - 10");
+        System.out.println("View all values - 11");
     }
 
     private void select(BufferedReader bufferedReader, String select) throws IOException {
@@ -52,6 +49,7 @@ public class DictionaryController<K, V> {
             case "9" -> clear();
             case "10" -> keySet();
             case "11" -> values();
+            default -> System.out.println("Please, select option with menu!");
         }
     }
 
