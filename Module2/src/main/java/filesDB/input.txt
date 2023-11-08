@@ -1,0 +1,23 @@
+5
+kharkov
+2
+2 3
+3 1
+vinnitsa
+1
+1 3
+lutsk
+3
+1 1
+4 4
+5 2
+donetsk
+1
+3 2
+lviv
+1
+3 2
+2
+vinnitsa lutsk
+lutsk kharkov
+
