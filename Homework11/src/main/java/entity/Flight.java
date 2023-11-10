@@ -28,4 +28,14 @@ public class Flight extends BaseEntity {
     public void setPrice(float price) {
         this.price = price;
     }
+
+    @Override
+    public String toString() {
+        return "Flight{" +
+                "id='" + getId() + '\'' +
+                " DepartureLocation='" + DepartureLocation + '\'' +
+                ", DestinationLocation='" + DestinationLocation + '\'' +
+                ", price=" + price +
+                '}';
+    }
 }

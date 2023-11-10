@@ -13,9 +13,11 @@ create table if not exists Flight(
 );
 
 create table if not exists AirportFlight(
-    airport_id bigint not null,
+    first_airport_id bigint not null,
     flight_id bigint not null,
-    primary key (airport_id, flight_id),
-    foreign key (airport_id) references Airport(id),
-    foreign key (flight_id) references Flight(id)
+    second_airport_id bigint not null,
+    primary key (first_airport_id, flight_id, second_airport_id),
+    foreign key (first_airport_id) references Airport(id),
+    foreign key (flight_id) references Flight(id),
+    foreign key (second_airport_id) references Airport(id)
 );

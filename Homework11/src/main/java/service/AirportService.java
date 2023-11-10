@@ -4,10 +4,8 @@ import entity.Airport;
 
 import java.util.List;
 
-public interface AirportService {
-    void create(Airport airport);
-    void update(Airport airport);
-    void delete(String id);
-    Airport findOne(String id);
+public interface AirportService extends CRUDService<Airport> {
+    Airport findOne(Long id);
     List<Airport> findAll();
+    void isEmpty(Airport entity);
 }

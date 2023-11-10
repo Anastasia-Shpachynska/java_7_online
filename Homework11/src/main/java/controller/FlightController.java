@@ -1,6 +1,7 @@
 package controller;
 
 import entity.Flight;
+import service.FlightService;
 import service.impl.FlightServiceImpl;
 
 import java.io.BufferedReader;
@@ -9,10 +10,8 @@ import java.io.InputStreamReader;
 import java.util.List;
 
 public class FlightController {
-    public static final String ANSI_BLUE = "\u001B[34m";
-    public static final String ANSI_RESET = "\u001B[0m";
 
-    FlightServiceImpl flightServiceImpl = new FlightServiceImpl();
+    FlightService flightService = new FlightServiceImpl();
 
     public void start() {
         try {
@@ -49,10 +48,6 @@ public class FlightController {
         }
     }
 
-    public boolean containsOnlyLettersAndSpaces(String input) {
-        return input.matches("[a-zA-Z ]+");
-    }
-
     private void create(BufferedReader bufferedReader) {
         try {
             System.out.println("Enter the departure location: ");
@@ -61,18 +56,12 @@ public class FlightController {
             String destinationLocation = bufferedReader.readLine();
             System.out.println("Enter the flight price: ");
             float price = Float.parseFloat(bufferedReader.readLine());
-            if(departureLocation.isEmpty() || destinationLocation.isEmpty()) {
-                System.out.println("Fields must be filled!");
-            }else if(!containsOnlyLettersAndSpaces(departureLocation) || !containsOnlyLettersAndSpaces(destinationLocation)) {
-                System.out.println("The departure location and destination location of the flight can only contain letters!");
-            }else {
-                Flight flight = new Flight();
-                flight.setDepartureLocation(departureLocation);
-                flight.setDestinationLocation(destinationLocation);
-                flight.setPrice(price);
-                flightServiceImpl.create(flight);
-                System.out.println("Flight successfully added.");
-            }
+            Flight flight = new Flight();
+            flight.setDepartureLocation(departureLocation);
+            flight.setDestinationLocation(destinationLocation);
+            flight.setPrice(price);
+            flightService.create(flight);
+            System.out.println("Flight successfully added.");
         }catch (IOException ex) {
             System.out.println("Oops... something went wrong, try again." + ex.getMessage());
         }catch (NumberFormatException ex) {
@@ -83,37 +72,20 @@ public class FlightController {
     private void update(BufferedReader bufferedReader) {
         try {
             System.out.println("Enter the flight ID: ");
-            String id = bufferedReader.readLine();
-            if(id.isEmpty()) {
-                System.out.println("ID cannot be empty!");
-            }else {
-                Flight flight = flightServiceImpl.findOne(id);
-                if(flight == null) {
-                    System.out.println("Airport not found!");
-                }else {
-                    System.out.println(ANSI_BLUE + "Flight: " + "Departure Location: " + ANSI_RESET + flight.getDepartureLocation() + "\t"
-                            + ANSI_BLUE + " Destination Location: " + ANSI_RESET + flight.getDestinationLocation() + "\t" + ANSI_BLUE + "Price: " + ANSI_RESET + flight.getPrice());
-
-                    System.out.println("Enter a new departure location: ");
-                    String newDepartureLocation = bufferedReader.readLine();
-                    System.out.println("Enter a new destination location: ");
-                    String newDestinationLocation = bufferedReader.readLine();
-                    System.out.println("Enter a new price: ");
-                    float newPrice = Float.parseFloat(bufferedReader.readLine());
-
-                    if(newDepartureLocation.isEmpty() || newDestinationLocation.isEmpty()) {
-                        System.out.println("Fields must be filled!");
-                    }else if(!containsOnlyLettersAndSpaces(newDepartureLocation) || !containsOnlyLettersAndSpaces(newDestinationLocation)) {
-                        System.out.println("The departure location and destination location of the flight can only contain letters!");
-                    }else {
-                        flight.setDepartureLocation(newDepartureLocation);
-                        flight.setDestinationLocation(newDestinationLocation);
-                        flight.setPrice(newPrice);
-                        flightServiceImpl.update(flight);
-                        System.out.println("The flight update!");
-                    }
-                }
-            }
+            Long id = Long.valueOf(bufferedReader.readLine());
+            Flight flight = flightService.findOne(id);
+            System.out.println(flight);
+            System.out.println("Enter a new departure location: ");
+            String newDepartureLocation = bufferedReader.readLine();
+            System.out.println("Enter a new destination location: ");
+            String newDestinationLocation = bufferedReader.readLine();
+            System.out.println("Enter a new price: ");
+            float newPrice = Float.parseFloat(bufferedReader.readLine());
+            flight.setDepartureLocation(newDepartureLocation);
+            flight.setDestinationLocation(newDestinationLocation);
+            flight.setPrice(newPrice);
+            flightService.update(flight);
+            System.out.println("The flight update!");
         }catch (IOException ex) {
             System.out.println("Oops... something went wrong, try again." + ex.getMessage());
         }catch (NumberFormatException ex) {
@@ -124,18 +96,11 @@ public class FlightController {
     private void delete(BufferedReader bufferedReader) {
         try{
             System.out.println("Enter the flight ID: ");
-            String id = bufferedReader.readLine();
-            if(id.isEmpty()) {
-                System.out.println("ID cannot be empty!");
-            }else {
-                Flight flight = flightServiceImpl.findOne(id);
-                if (flight == null) {
-                    System.out.println("Airport not found!");
-                } else {
-                    flightServiceImpl.delete(id);
-                    System.out.println("Flight successfully deleted.");
-                }
-            }
+            Long id = Long.valueOf(bufferedReader.readLine());
+            Flight flight = flightService.findOne(id);
+            System.out.println(flight);
+            flightService.delete(id);
+            System.out.println("Flight successfully deleted.");
         }catch(IOException ex) {
             System.out.println("Oops... something went wrong, try again." + ex.getMessage());
         }
@@ -144,18 +109,9 @@ public class FlightController {
     private void findOne(BufferedReader bufferedReader) {
         try {
             System.out.println("Enter the flight ID: ");
-            String id = bufferedReader.readLine();
-            if(id.isEmpty()) {
-                System.out.println("ID cannot be empty!");
-            }else {
-                Flight flight = flightServiceImpl.findOne(id);
-                if(flight == null) {
-                    System.out.println("Flight not found!");
-                }else {
-                    System.out.println(ANSI_BLUE + "Id: " +  ANSI_RESET + flight.getId() + "\t" + ANSI_BLUE + "Departure Location: " + ANSI_RESET + flight.getDepartureLocation() + "\t"
-                            + ANSI_BLUE + " Destination Location: " + ANSI_RESET + flight.getDestinationLocation() + "\t" + ANSI_BLUE + "Price: " + ANSI_RESET + flight.getPrice());
-                }
-            }
+            Long id = Long.valueOf(bufferedReader.readLine());
+            Flight flight = flightService.findOne(id);
+            System.out.println(flight);
         }catch (IOException ex) {
             System.out.println("Oops... something went wrong, try again." + ex.getMessage());
         }
@@ -163,13 +119,9 @@ public class FlightController {
 
     private void findAll() {
         System.out.println("All flights: ");
-        List<Flight> flights = flightServiceImpl.findAll();
-        if(flights.size() == 0) {
-            System.out.println("No flight added yet.");
-        }
+        List<Flight> flights = flightService.findAll();
         for (Flight flight : flights) {
-            System.out.println( ANSI_BLUE + "Id: " +  ANSI_RESET + flight.getId() + "\t" + ANSI_BLUE + "Departure Location: " + ANSI_RESET + flight.getDepartureLocation() + "\t"
-                    + ANSI_BLUE + " Destination Location: " + ANSI_RESET + flight.getDestinationLocation() + "\t" + ANSI_BLUE + "Price: " + ANSI_RESET + flight.getPrice());
+            System.out.println(flight);
         }
     }
 }

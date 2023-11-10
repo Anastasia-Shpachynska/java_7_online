@@ -21,6 +21,11 @@
       <artifactId>mysql-connector-j</artifactId>
       <version>8.0.32</version>
     </dependency>
+      <dependency>
+          <groupId>antlr</groupId>
+          <artifactId>antlr</artifactId>
+          <version>2.7.2</version>
+      </dependency>
   </dependencies>
 
   <build>
@@ -43,7 +48,7 @@
             <configuration>
               <transformers>
                 <transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
-                  <mainClass>util.CRUDMain</mainClass>
+                  <mainClass>CRUDMain</mainClass>
                 </transformer>
               </transformers>
             </configuration>
