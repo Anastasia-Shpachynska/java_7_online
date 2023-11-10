@@ -1,30 +1,39 @@
 package entity;
 
 public class AirportFlight extends BaseEntity {
-    private String firstAirportId;
-    private String secondAirportId;
-    private String flightId;
+    private Long firstAirportId;
+    private Long secondAirportId;
+    private Long flightId;
 
-    public String getFirstAirportId() {
+    public Long getFirstAirportId() {
         return firstAirportId;
     }
 
-    public void setFirstAirportId(String firstAirportId) {
+    public void setFirstAirportId(Long firstAirportId) {
         this.firstAirportId = firstAirportId;
     }
 
-    public String getSecondAirportId() {
+    public Long getSecondAirportId() {
         return secondAirportId;
     }
 
-    public void setSecondAirportId(String secondAirportId) {this.secondAirportId = secondAirportId;
+    public void setSecondAirportId(Long secondAirportId) {this.secondAirportId = secondAirportId;
     }
 
-    public String getFlightId() {
+    public Long getFlightId() {
         return flightId;
     }
 
-    public void setFlightId(String flightId) {
+    public void setFlightId(Long flightId) {
         this.flightId = flightId;
+    }
+
+    @Override
+    public String toString() {
+        return "AirportFlight{" +
+                "firstAirportId='" + firstAirportId + '\'' +
+                ", flightId='" + flightId + '\'' +
+                ", secondAirportId='" + secondAirportId + '\'' +
+                '}';
     }
 }

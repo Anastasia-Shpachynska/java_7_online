@@ -6,13 +6,12 @@ import entity.Flight;
 
 import java.util.List;
 
-public interface AirportFlightService {
-    boolean add(AirportFlight airportFlight);
-    void update(AirportFlight airportFlight);
-    boolean deleteFlight(String id);
-    boolean deleteAirport(String id);
-    List<String> findAirport(String id);
-    Flight findFlight(String id);
-    List<Airport> findAllAirports();
-    List<Flight> findAllFlights();
+public interface AirportFlightService extends CRUDService<AirportFlight>{
+    void deleteAirport(Long id);
+    List<AirportFlight> findAirportFlights(Long id);
+    List<AirportFlight> findFlightAirports(Long id);
+    List<String> findAllAirports();
+    List<AirportFlight> findAllFlight();
+
+    void isEmpty(AirportFlight entity);
 }

@@ -10,4 +10,12 @@ public class Airport extends BaseEntity {
     public String getName() {
         return name;
     }
+
+    @Override
+    public String toString() {
+        return "Airport{" +
+                "id='" + getId() + '\'' +
+                " name='" + name + '\'' +
+                '}';
+    }
 }

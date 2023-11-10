@@ -1,6 +1,7 @@
 package controller;
 
 import entity.Airport;
+import service.AirportService;
 import service.impl.AirportServiceImpl;
 
 import java.io.BufferedReader;
@@ -9,10 +10,8 @@ import java.io.InputStreamReader;
 import java.util.List;
 
 public class AirportController {
-    public static final String ANSI_BLUE = "\u001B[34m";
-    public static final String ANSI_RESET = "\u001B[0m";
 
-    AirportServiceImpl airportServiceImpl = new AirportServiceImpl();
+    AirportService airportService = new AirportServiceImpl();
 
     public void start() {
         try {
@@ -49,24 +48,14 @@ public class AirportController {
         }
     }
 
-    public boolean containsOnlyLettersAndSpaces(String input) {
-        return input.matches("[a-zA-Z ]+");
-    }
-
     private void create(BufferedReader bufferedReader) {
         try {
             System.out.println("Please, enter the name of the airport: ");
             String airportName = bufferedReader.readLine();
-            if (airportName.isEmpty()) {
-                System.out.println("Field 'name' cannot be empty!");
-            }else if(!containsOnlyLettersAndSpaces(airportName)) {
-                System.out.println("The name of the airport can only contain letters!");
-            }else {
                 Airport airport = new Airport();
                 airport.setName(airportName);
-                airportServiceImpl.create(airport);
+                airportService.create(airport);
                 System.out.println("Airport successfully added.");
-            }
         }catch (IOException ex) {
             System.out.println("Oops... something went wrong, try again." + ex.getMessage());
         }
@@ -75,29 +64,14 @@ public class AirportController {
     private void update(BufferedReader bufferedReader) {
         try {
             System.out.println("Enter the airport ID: ");
-            String id = bufferedReader.readLine();
-            if(id.isEmpty()) {
-                System.out.println("ID cannot be empty!");
-            }else {
-                Airport airport = airportServiceImpl.findOne(id);
-                if(airport == null) {
-                    System.out.println("Airport not found!");
-                }else {
-                    System.out.println(ANSI_BLUE + "Airport: " + ANSI_RESET + airport.getName());
-
-                    System.out.println("Enter a new name: ");
-                    String newName = bufferedReader.readLine();
-                    if(newName.isEmpty()) {
-                        System.out.println("Field 'name' cannot be empty!");
-                    }else if(!containsOnlyLettersAndSpaces(newName)) {
-                        System.out.println("The name of the airport can only contain letters!");
-                    }else {
-                        airport.setName(newName);
-                        airportServiceImpl.update(airport);
-                        System.out.println("The airport update!");
-                    }
-                }
-            }
+            Long id = Long.valueOf(bufferedReader.readLine());
+            Airport airport = airportService.findOne(id);
+            System.out.println(airport);
+            System.out.println("Enter a new name: ");
+            String newName = bufferedReader.readLine();
+            airport.setName(newName);
+            airportService.update(airport);
+            System.out.println("The airport update!");
         }catch (IOException ex) {
             System.out.println("Oops... something went wrong, try again." + ex.getMessage());
         }
@@ -106,18 +80,11 @@ public class AirportController {
     private void delete(BufferedReader bufferedReader) {
         try{
             System.out.println("Enter the airport ID: ");
-            String id = bufferedReader.readLine();
-            if(id.isEmpty()) {
-                System.out.println("ID cannot be empty!");
-            }else {
-                Airport airport = airportServiceImpl.findOne(id);
-                if (airport == null) {
-                    System.out.println("Airport not found!");
-                } else {
-                    airportServiceImpl.delete(id);
-                    System.out.println("Airport successfully deleted.");
-                }
-            }
+            Long id = Long.valueOf(bufferedReader.readLine());
+            Airport airport = airportService.findOne(id);
+            System.out.println(airport);
+            airportService.delete(id);
+            System.out.println("Airport successfully deleted.");
         }catch(IOException ex) {
             System.out.println("Oops... something went wrong, try again." + ex.getMessage());
         }
@@ -126,17 +93,9 @@ public class AirportController {
     private void findOne(BufferedReader bufferedReader) {
         try {
             System.out.println("Enter the airport ID: ");
-            String id = bufferedReader.readLine();
-            if(id.isEmpty()) {
-                System.out.println("ID cannot be empty!");
-            }else {
-                Airport airport = airportServiceImpl.findOne(id);
-                if(airport == null) {
-                    System.out.println("Airport not found!");
-                }else {
-                    System.out.println(ANSI_BLUE + "Id: " + ANSI_RESET + id + "\t" + ANSI_BLUE + "Name: " + ANSI_RESET + airport.getName());
-                }
-            }
+            Long id = Long.valueOf(bufferedReader.readLine());
+            Airport airport = airportService.findOne(id);
+            System.out.println("Airport: " + airport);
         }catch (IOException ex) {
             System.out.println("Oops... something went wrong, try again." + ex.getMessage());
         }
@@ -144,12 +103,9 @@ public class AirportController {
 
     private void findAll() {
         System.out.println("All airports: ");
-        List<Airport> airports = airportServiceImpl.findAll();
-        if(airports.size() == 0) {
-            System.out.println("No airport added yet.");
-        }
+        List<Airport> airports = airportService.findAll();
         for (Airport airport : airports) {
-            System.out.println(ANSI_BLUE + "Id: " + ANSI_RESET + airport.getId() + "\t" + ANSI_BLUE + "Name: " + ANSI_RESET + airport.getName());
+            System.out.println(airport);
         }
     }
 }
