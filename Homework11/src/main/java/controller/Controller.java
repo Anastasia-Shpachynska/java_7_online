@@ -5,7 +5,6 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 
 public class Controller {
-
     AirportController airportController = new AirportController();
     FlightController flightController = new FlightController();
     AirportFlightController airportFlightController = new AirportFlightController();
