@@ -69,9 +69,11 @@ public class AirportFlightController {
             Long idSecond = Long.valueOf(bufferedReader.readLine());
             System.out.println("Enter the ID of the flight: ");
             Long idFlight = Long.valueOf(bufferedReader.readLine());
+
             airportService.findOne(idFirst);
             airportService.findOne(idSecond);
             flightService.findOne(idFlight);
+
             AirportFlight airportFlight = new AirportFlight();
             airportFlight.setFirstAirportId(idFirst);
             airportFlight.setSecondAirportId(idSecond);
